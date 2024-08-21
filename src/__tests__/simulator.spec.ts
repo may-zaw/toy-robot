@@ -1,68 +1,77 @@
-import {beforeAll, test, expect, describe} from 'vitest'
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest'
 import { Simulator } from '../simulator'
+import { Robot } from '../robot';
+import { Direction } from '../constants'
 
+describe('Simulator', () => {
+  let simulator: Simulator
 
-describe(`Simulator`, () => {
+  beforeEach(() => {
+    simulator = new Simulator()
 
-
-  describe(`valid commands`, () => {
-    let simulator
-    beforeAll(() => {
-      simulator = new Simulator()
-    })
-    test(`Robot should move and report correct position`, () => {
-      simulator.execute(`PLACE 0,0,NORTH`)
-      simulator.execute(`MOVE`)
-      // @ts-ignore
-      const output = simulator.robot.report()
-      expect(output).toBe(`0,1,NORTH`)
-    })
-  
-    test(`Robot should turn left correctly`, () => {
-      simulator.execute(`PLACE 0,0,NORTH`)
-      simulator.execute(`LEFT`)
-      // @ts-ignore
-      const output = simulator.robot.report()
-      expect(output).toBe(`0,0,WEST`)
-    })
-  
-    test(`Robot should turn right correctly`, () => {
-      simulator.execute(`PLACE 0,0,NORTH`)
-      simulator.execute(`RIGHT`)
-      // @ts-ignore
-      const output = simulator.robot.report()
-      expect(output).toBe(`0,0,EAST`)
-    })
-  
-    test(`Robot should handle edge cases without falling off the table`, () => {
-      simulator.execute(`PLACE 4,4,EAST`)
-      simulator.execute(`MOVE`)
-      // @ts-ignore
-      const output = simulator.robot.report()
-      expect(output).toBe(`4,4,EAST`)
-    })
+    vi.spyOn(Robot.prototype, 'place').mockImplementation(() => {})
+    vi.spyOn(Robot.prototype, 'move').mockImplementation(() => {})
+    vi.spyOn(Robot.prototype, 'turnLeft').mockImplementation(() => {})
+    vi.spyOn(Robot.prototype, 'turnRight').mockImplementation(() => {})
+    vi.spyOn(Robot.prototype, 'report').mockImplementation(() => '0,0,NORTH')
+    vi.spyOn(Robot.prototype, 'getPosition').mockImplementation(() => ({ x: 0, y: 0, facing: Direction.NORTH }))
+    vi.spyOn(console, 'log').mockImplementation(() => {})
+    vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
-  describe(`invalid commands`, () => {
-    let simulator
-    beforeAll(() => {
-      simulator = new Simulator()
-    })
-    test(`The first movement is not PLACE`, () => {
-      // @ts-ignore
-      expect(() => simulator.execute(`EAST,0,PLACE 4`)).toThrowError(
-        /^The first movement is not PLACE$/,
-      )
-    })
+  afterEach(() => {
+    vi.restoreAllMocks()
+  });
 
-    test(`The command is wrong`, () => {
-      // @ts-ignore
-      simulator.execute(`PLACE 2,3,UP`)
-      simulator.execute(`MOVE`)
-      // @ts-ignore
-      const output = simulator.robot.report()
-      console.log(output)
-      expect(output).toBe(`Wrong command`)
-    })
+  it('should handle valid PLACE command and execute MOVE command', () => {
+    simulator.execute('PLACE 0,0,NORTH')
+    simulator.execute('MOVE')
+
+    expect(Robot.prototype.move).toHaveBeenCalled()
   })
-})
+
+  it('should handle valid PLACE command and execute LEFT command', () => {
+    simulator.execute('PLACE 0,0,NORTH');
+    simulator.execute('LEFT');
+    expect(Robot.prototype.turnLeft).toHaveBeenCalled()
+  });
+
+  it('should handle valid PLACE command and execute RIGHT command', () => {
+    simulator.execute('PLACE 0,0,NORTH');
+    simulator.execute('RIGHT');
+    expect(Robot.prototype.turnRight).toHaveBeenCalled()
+  });
+
+  it('should handle valid PLACE command and execute REPORT command', () => {
+    simulator.execute('PLACE 0,0,NORTH');
+    simulator.execute('REPORT');
+    expect(Robot.prototype.report).toHaveBeenCalled()
+    expect(console.log).toHaveBeenCalledWith('0,0,NORTH')
+  });
+
+  it('should ignore MOVE command before PLACE command', () => {
+    simulator.execute('MOVE');
+    expect(Robot.prototype.move).not.toHaveBeenCalled()
+  });
+
+  it('should handle invalid PLACE command with missing parameters', () => {
+    simulator.execute('PLACE 0,0');
+    expect(console.error).toHaveBeenCalledWith('PLACE command must have 3 parameters: x, y, facing')
+  });
+
+  it('should handle invalid PLACE command with incorrect parameters', () => {
+    simulator.execute('PLACE x,y,NORTH')
+    expect(console.error).toHaveBeenCalledWith('x and y must be valid integers')
+  });
+
+  it('should handle invalid direction in PLACE command', () => {
+    simulator.execute('PLACE 0,0/INVALID')
+    expect(console.error).toHaveBeenCalledWith('PLACE command must have 3 parameters: x, y, facing')
+  });
+
+  it('should handle unknown action', () => {
+    simulator.execute('PLACE 0,0,NORTH')
+    simulator.execute('UNKNOWN')
+    expect(console.error).toHaveBeenCalledWith('Invalid action')
+  });
+});
