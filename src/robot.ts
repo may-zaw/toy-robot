@@ -1,4 +1,4 @@
-import { Direction, ValidActions } from './constants'
+import { Direction, ValidActions } from './types'
 
 export class Robot {
   private x: number | null = null

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest'
 import { Simulator } from '../simulator'
 import { Robot } from '../robot';
-import { Direction } from '../constants'
+import { Direction } from '../types'
 
 describe('Simulator', () => {
   let simulator: Simulator
@@ -46,7 +46,7 @@ describe('Simulator', () => {
     simulator.execute('PLACE 0,0,NORTH');
     simulator.execute('REPORT');
     expect(Robot.prototype.report).toHaveBeenCalled()
-    expect(console.log).toHaveBeenCalledWith('0,0,NORTH')
+    expect(console.log).toHaveBeenCalledWith('Output: 0,0,NORTH')
   });
 
   it('should ignore MOVE command before PLACE command', () => {

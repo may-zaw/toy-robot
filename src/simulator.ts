@@ -1,5 +1,5 @@
 import {  Robot } from './robot'
-import { Direction, ValidActions } from './constants'
+import { Direction, ValidActions } from './types'
 import { Table } from './table'
 
 export class Simulator {
@@ -45,7 +45,7 @@ export class Simulator {
           break;
         case ValidActions.REPORT: {
           const reportData = this.robot.report()
-          if (reportData) console.log(reportData);
+          if (reportData) console.log(`Output: ${reportData}`);
           break;
         }
       }

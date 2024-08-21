@@ -1,5 +1,5 @@
 import { beforeEach, describe, it, expect, vi } from 'vitest'
-import { Direction, ValidActions } from '../constants'
+import { Direction, ValidActions } from '../types'
 import { Robot } from '../robot'
 
 describe('Robot', () => {
