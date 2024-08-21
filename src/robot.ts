@@ -1,4 +1,4 @@
-import { Direction } from './direction'
+import { Direction, ValidActions } from './constants'
 
 export class Robot {
   private x: number | null = null
@@ -53,5 +53,9 @@ export class Robot {
 
   public getPosition(): { x: number | null, y: number | null, facing: Direction | null } {
     return { x: this.x, y: this.y, facing: this.facing }
+  }
+
+  public isValidAction(action: string): boolean {
+    return Object.values(ValidActions).includes(action as ValidActions)
   }
 }
