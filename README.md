@@ -9,6 +9,22 @@ git clone https://github.com/may-zaw/toy-robot.git
 cd seek-toyrobot
 ```
 
+## Running the app with Docker
+
+To build the app in docker
+
+```bash
+  yarn docker-build
+```
+
+To run the app in docker
+
+```bash
+  yarn docker-run
+```
+
+## Running the app without docker
+
 Install dependencies:
 
 ```bash
@@ -25,16 +41,4 @@ To run the test
 
 ```bash
   yarn test
-```
-
-To build the app in docker
-
-```bash
-  yarn docker-build
-```
-
-To run the app in docker
-
-```bash
-  yarn docker-run
 ```
