@@ -14,6 +14,7 @@ export default [
       'semi': [`error`, `never`],
       'indent': [`error`, 2],
       '@stylistic/ts/indent': [`error`, 2],
+      "no-unused-vars": "warn",
       quotes: [`error`, `backtick`],
     }
   },
