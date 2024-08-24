@@ -17,7 +17,7 @@ describe(`Integration Test`, () => {
     test(`Robot should move and report correct position`, () => {
       simulator.execute(`PLACE 0,0,NORTH`)
       simulator.execute(`MOVE`)
-      // @ts-ignore
+
       const output = simulator.robot.report()
       expect(output).toBe(`0,1,NORTH`)
     })
@@ -25,7 +25,7 @@ describe(`Integration Test`, () => {
     test(`Robot should turn left correctly`, () => {
       simulator.execute(`PLACE 0,0,NORTH`)
       simulator.execute(`LEFT`)
-      // @ts-ignore
+
       const output = simulator.robot.report()
       expect(output).toBe(`0,0,WEST`)
     })
@@ -33,7 +33,7 @@ describe(`Integration Test`, () => {
     test(`Robot should turn right correctly`, () => {
       simulator.execute(`PLACE 0,0,NORTH`)
       simulator.execute(`RIGHT`)
-      // @ts-ignore
+
       const output = simulator.robot.report()
       expect(output).toBe(`0,0,EAST`)
     })
@@ -41,7 +41,7 @@ describe(`Integration Test`, () => {
     test(`Robot should handle edge cases without falling off the table`, () => {
       simulator.execute(`PLACE 4,4,EAST`)
       simulator.execute(`MOVE`)
-      // @ts-ignore
+
       const output = simulator.robot.report()
       expect(output).toBe(`4,4,EAST`)
     })
