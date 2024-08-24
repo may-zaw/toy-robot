@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest'
 import { Simulator } from '../src/simulator/simulator'
 import { Robot } from '../src/core/robot'
 import { Direction } from '../src/types'
+import * as Logger from '../src/utils/logger'
 
 describe(`Simulator`, () => {
   let simulator: Simulator
@@ -15,8 +16,8 @@ describe(`Simulator`, () => {
     vi.spyOn(Robot.prototype, `turnRight`).mockImplementation(() => {})
     vi.spyOn(Robot.prototype, `report`).mockImplementation(() => `0,0,NORTH`)
     vi.spyOn(Robot.prototype, `getPosition`).mockImplementation(() => ({ x: 0, y: 0, facing: Direction.NORTH }))
-    vi.spyOn(console, `log`).mockImplementation(() => {})
-    vi.spyOn(console, `error`).mockImplementation(() => {})
+    vi.spyOn(Logger, `info`).mockImplementation((data) => data)
+    vi.spyOn(Logger, `error`).mockImplementation((error) => error)
   })
 
   afterEach(() => {
@@ -46,7 +47,7 @@ describe(`Simulator`, () => {
     simulator.execute(`PLACE 0,0,NORTH`)
     simulator.execute(`REPORT`)
     expect(Robot.prototype.report).toHaveBeenCalled()
-    expect(console.log).toHaveBeenCalledWith(`Output: 0,0,NORTH`)
+    expect(Logger.info).toHaveBeenCalledWith(`Output: 0,0,NORTH`)
   })
 
   it(`should ignore MOVE command before PLACE command`, () => {
@@ -56,22 +57,22 @@ describe(`Simulator`, () => {
 
   it(`should handle invalid PLACE command with missing parameters`, () => {
     simulator.execute(`PLACE 0,0`)
-    expect(console.error).toHaveBeenCalledWith(`PLACE command must have 3 parameters: x, y, facing`)
+    expect(Logger.error).toHaveBeenCalledWith(`PLACE command must have 3 parameters: x, y, facing`)
   })
 
   it(`should handle invalid PLACE command with incorrect parameters`, () => {
     simulator.execute(`PLACE x,y,NORTH`)
-    expect(console.error).toHaveBeenCalledWith(`x and y must be valid integers`)
+    expect(Logger.error).toHaveBeenCalledWith(`x and y must be valid integers`)
   })
 
   it(`should handle invalid direction in PLACE command`, () => {
     simulator.execute(`PLACE 0,0/INVALID`)
-    expect(console.error).toHaveBeenCalledWith(`PLACE command must have 3 parameters: x, y, facing`)
+    expect(Logger.error).toHaveBeenCalledWith(`PLACE command must have 3 parameters: x, y, facing`)
   })
 
   it(`should handle unknown action`, () => {
     simulator.execute(`PLACE 0,0,NORTH`)
     simulator.execute(`UNKNOWN`)
-    expect(console.error).toHaveBeenCalledWith(`Invalid action`)
+    expect(Logger.error).toHaveBeenCalledWith(`Invalid action`)
   })
 })
