@@ -17,16 +17,16 @@ export class Robot {
     switch (this.facing) {
       case Direction.NORTH:
         this.y++
-      break;
+        break
       case Direction.SOUTH:
         this.y--
-      break;
+        break
       case Direction.EAST:
         this.x++
-      break;
+        break
       case Direction.WEST:
         this.x--
-      break;
+        break
     }
   }
 

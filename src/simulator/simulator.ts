@@ -8,10 +8,10 @@ export class Simulator {
   private hasPlaced: boolean = false
 
   public execute(command: string): void {
-    const [action, params] = this.parseCommand(command);
+    const [action, params] = this.parseCommand(command)
 
     if (!this.isValidAction(action)) {
-      console.error('Invalid action')
+      console.error(`Invalid action`)
       return
     }
 
@@ -25,7 +25,7 @@ export class Simulator {
   }
 
   private parseCommand(command: string): [string, string | undefined] {
-    const commands = command.trim().toUpperCase().split(' ')
+    const commands = command.trim().toUpperCase().split(` `)
     return [commands[0], commands[1]]
   }
 
@@ -35,11 +35,11 @@ export class Simulator {
 
   private handlePlaceCommand(params: string | undefined): void {
     if (!params) {
-      console.error('PLACE command must have 3 parameters, x, y and facing');
+      console.error(`PLACE command must have 3 parameters, x, y and facing`)
       return
     }
 
-    const placeParamsArray = this.parsePlaceCommand(params);
+    const placeParamsArray = this.parsePlaceCommand(params)
     if (!placeParamsArray) return
 
     const [x, y, facing] = placeParamsArray
@@ -57,20 +57,20 @@ export class Simulator {
         break
       case ValidActions.LEFT:
         this.robot.turnLeft()
-        break;
+        break
       case ValidActions.RIGHT:
         this.robot.turnRight()
-        break;
+        break
       case ValidActions.REPORT:
         this.report()
         break
       default:
-        console.error('Invalid action')
+        console.error(`Invalid action`)
     }
   }
 
   private handleNoPlaceCommand(): void {
-    console.error('The first command must be PLACE')
+    console.error(`The first command must be PLACE`)
   }
 
   private report(): void {
@@ -90,16 +90,16 @@ export class Simulator {
     switch (facing) {
       case Direction.NORTH:
         newY++
-      break
+        break
       case Direction.SOUTH:
         newY--
-      break
+        break
       case Direction.EAST:
         newX++
-      break
+        break
       case Direction.WEST:
         newX--
-      break
+        break
     }
 
     return this.table.isValidPosition(newX, newY)
@@ -110,10 +110,10 @@ export class Simulator {
   }
 
   private parsePlaceCommand(params: string): [number, number, Direction] | null {
-    const splitParams = params.split(',')
+    const splitParams = params.split(`,`)
 
     if (splitParams.length !== 3) {
-      console.error('PLACE command must have 3 parameters: x, y, facing');
+      console.error(`PLACE command must have 3 parameters: x, y, facing`)
       return null
     }
 
@@ -123,13 +123,13 @@ export class Simulator {
     const y = parseInt(yStr, 10)
 
     if (!Number.isInteger(x) || !Number.isInteger(y)) {
-      console.error('x and y must be valid integers')
+      console.error(`x and y must be valid integers`)
       return null
     }
 
-    const facing = facingStr as Direction;
+    const facing = facingStr as Direction
     if (!Object.values(Direction).includes(facing)) {
-      console.error('Invalid direction')
+      console.error(`Invalid direction`)
       return null
     }
 

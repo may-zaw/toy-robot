@@ -1,5 +1,5 @@
-import {beforeEach, afterEach, test, expect, describe, vi} from 'vitest'
-import { Simulator } from '../src/simulator/simulator'
+import {beforeEach, afterEach, test, expect, describe, vi} from "vitest"
+import { Simulator } from "../src/simulator/simulator"
 
 describe(`Integration Test`, () => {
   describe(`valid commands`, () => {
@@ -49,29 +49,29 @@ describe(`Integration Test`, () => {
     let simulator
     beforeEach(() => {
       simulator = new Simulator()
-      vi.spyOn(console, 'error').mockImplementation(() => {})
+      vi.spyOn(console, `error`).mockImplementation(() => {})
     })
     afterEach(() => {
       simulator = null
     })
     test(`Robot should ignore the command if the first command is not PLACE`, () => {
       simulator.execute(`REPORT`)
-      expect(console.error).toHaveBeenCalledWith('The first command must be PLACE');
+      expect(console.error).toHaveBeenCalledWith(`The first command must be PLACE`)
     })
 
     test(`The direction is invalid`, () => {
       simulator.execute(`PLACE 2,3,UP`)
-      expect(console.error).toHaveBeenCalledWith('Invalid direction')
+      expect(console.error).toHaveBeenCalledWith(`Invalid direction`)
     })
 
     test(`The x, y values are not numbers`, () => {
       simulator.execute(`PLACE a,3,EAST`)
-      expect(console.error).toHaveBeenCalledWith('x and y must be valid integers')
+      expect(console.error).toHaveBeenCalledWith(`x and y must be valid integers`)
     })
 
     test(`The x, y values are not numbers`, () => {
       simulator.execute(`PLACE a,3.5,EAST`)
-      expect(console.error).toHaveBeenCalledWith('x and y must be valid integers')
+      expect(console.error).toHaveBeenCalledWith(`x and y must be valid integers`)
     })
   })
 })

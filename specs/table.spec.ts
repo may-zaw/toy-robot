@@ -1,23 +1,23 @@
-import { beforeEach, describe, it, expect } from 'vitest';
-import { Table } from '../src/core/table';
+import { beforeEach, describe, it, expect } from 'vitest'
+import { Table } from '../src/core/table'
 
-describe('Table', () => {
-  let table: Table;
+describe(`Table`, () => {
+  let table: Table
 
   // Test setup: create a new Table instance before each test
   beforeEach(() => {
-    table = new Table();
-  });
+    table = new Table()
+  })
 
-  it('should initialize with default dimensions', () => {
+  it(`should initialize with default dimensions`, () => {
     // The default dimensions should be 5x5
     expect(table.isValidPosition(0, 0)).toBe(true)
     expect(table.isValidPosition(4, 4)).toBe(true)
     expect(table.isValidPosition(5, 5)).toBe(false)
     expect(table.isValidPosition(-1, -1)).toBe(false)
-  });
+  })
 
-  it('should initialize with custom dimensions', () => {
+  it(`should initialize with custom dimensions`, () => {
     // Create a Table with custom dimensions
     const customTable = new Table(10, 8)
 
@@ -30,7 +30,7 @@ describe('Table', () => {
     expect(customTable.isValidPosition(-1, -1)).toBe(false)
   })
 
-  it('should handle edge cases for position validation', () => {
+  it(`should handle edge cases for position validation`, () => {
     // Test positions at the edges of the default dimensions
     expect(table.isValidPosition(0, 0)).toBe(true)
     expect(table.isValidPosition(4, 4)).toBe(true)
