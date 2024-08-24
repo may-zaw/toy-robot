@@ -1,0 +1,70 @@
+Test Case 1: Basic Movement
+PLACE 0,0,NORTH
+MOVE
+REPORT
+
+Test Case 2: Turning Left
+PLACE 0,0,NORTH
+LEFT
+REPORT
+
+Test Case 3: Moving and Turning
+PLACE 1,2,EAST
+MOVE
+MOVE
+LEFT
+MOVE
+REPORT
+
+Test Case 4: Ignoring Invalid Moves
+PLACE 0,0,SOUTH
+MOVE
+REPORT
+
+Test Case 5: Ignoring Commands Before PLACE
+MOVE
+LEFT
+REPORT
+PLACE 2,2,EAST
+MOVE
+REPORT
+
+Test Case 6: Multiple PLACE Commands
+PLACE 0,0,NORTH
+MOVE
+REPORT
+PLACE 1,1,EAST
+MOVE
+REPORT
+
+Test Case 7: Edge of the Table
+PLACE 4,4,NORTH
+MOVE
+REPORT
+RIGHT
+MOVE
+REPORT
+
+Test Case 8: Invalid PLACE Command
+PLACE 5,5,EAST
+MOVE
+REPORT
+PLACE 2,2,SOUTH
+MOVE
+REPORT
+
+Test Case 9: Continuous REPORT Commands
+PLACE 3,3,WEST
+REPORT
+MOVE
+REPORT
+RIGHT
+REPORT
+
+Test Case 10: Commands with Whitespace Variations
+  PLACE 1,  1,  NORTH
+MOVE   
+ REPORT  
+RIGHT
+  MOVE
+REPORT
