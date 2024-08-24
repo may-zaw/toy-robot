@@ -20,9 +20,9 @@ PLACE X,Y,F
 - Y: Y position of the robot
 - F: NORTH, SOUTH, EAST, or WEST
 
-MOVE
-LEFT
-RIGHT
+MOVE<br />
+LEFT<br />
+RIGHT<br />
 REPORT
 
 Test cases commands file is located in the project src/simulator/ folder.
