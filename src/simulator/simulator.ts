@@ -1,6 +1,7 @@
 import {  Robot } from '../core/robot'
 import { Direction, ValidActions } from '../types'
 import { Table } from '../core/table'
+import {error, info} from '../utils'
 
 export class Simulator {
   private robot: Robot = new Robot()
@@ -11,7 +12,7 @@ export class Simulator {
     const [action, params] = this.parseCommand(command)
 
     if (!this.isValidAction(action)) {
-      console.error(`Invalid action`)
+      error(`Invalid action`)
       return
     }
 
@@ -35,7 +36,7 @@ export class Simulator {
 
   private handlePlaceCommand(params: string | undefined): void {
     if (!params) {
-      console.error(`PLACE command must have 3 parameters, x, y and facing`)
+      error(`PLACE command must have 3 parameters, x, y and facing`)
       return
     }
 
@@ -65,18 +66,18 @@ export class Simulator {
         this.report()
         break
       default:
-        console.error(`Invalid action`)
+        error(`Invalid action`)
     }
   }
 
   private handleNoPlaceCommand(): void {
-    console.error(`The first command must be PLACE`)
+    error(`The first command must be PLACE`)
   }
 
   private report(): void {
     const reportData = this.robot.report()
     if (reportData) {
-      console.log(`Output: ${reportData}`)
+      info(`Output: ${reportData}`)
     }
   }
 
@@ -113,7 +114,7 @@ export class Simulator {
     const splitParams = params.split(`,`)
 
     if (splitParams.length !== 3) {
-      console.error(`PLACE command must have 3 parameters: x, y, facing`)
+      error(`PLACE command must have 3 parameters: x, y, facing`)
       return null
     }
 
@@ -123,13 +124,13 @@ export class Simulator {
     const y = parseInt(yStr, 10)
 
     if (!Number.isInteger(x) || !Number.isInteger(y)) {
-      console.error(`x and y must be valid integers`)
+      error(`x and y must be valid integers`)
       return null
     }
 
     const facing = facingStr as Direction
     if (!Object.values(Direction).includes(facing)) {
-      console.error(`Invalid direction`)
+      error(`Invalid direction`)
       return null
     }
 

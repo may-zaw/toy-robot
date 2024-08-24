@@ -1,11 +1,7 @@
-class Logger {
-  static log(message: string): void {
-    console.log(`[INFO]: ${message}`)
-  }
-
-  static error(message: string): void {
-    console.error(`[ERROR]: ${message}`)
-  }
+export const info = (message: string): void => {
+  console.log(`[INFO]: ${message}`)
 }
 
-export default Logger
+export const error = (message: string): void => {
+  console.error(`[ERROR]: ${message}`)
+}
