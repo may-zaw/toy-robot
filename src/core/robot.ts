@@ -1,9 +1,16 @@
 import { Direction, ValidActions } from '../types'
 
 export class Robot {
-  private x: number | null = null
-  private y: number | null = null
-  private facing: Direction | null = null
+  private x: number 
+  private y: number 
+  private facing: Direction 
+
+  constructor() {
+    this.x = null
+    this.y = null
+    this.facing = null
+
+  }
 
   public place(x: number, y: number, facing: Direction): void {
     this.x = x
