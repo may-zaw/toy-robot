@@ -1,4 +1,4 @@
-import { Simulator } from './simulator'
+import { Simulator } from './simulator/simulator'
 
 const simulator = new Simulator()
 

@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest'
-import { Simulator } from '../simulator'
-import { Robot } from '../robot';
-import { Direction } from '../types'
+import { Simulator } from '../src/simulator/simulator'
+import { Robot } from '../src/core/robot';
+import { Direction } from '../src/types'
 
 describe('Simulator', () => {
   let simulator: Simulator

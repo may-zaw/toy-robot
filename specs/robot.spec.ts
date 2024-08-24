@@ -1,6 +1,6 @@
 import { beforeEach, describe, it, expect, vi } from 'vitest'
-import { Direction, ValidActions } from '../types'
-import { Robot } from '../robot'
+import { Direction, ValidActions } from '../src/types'
+import { Robot } from '../src/core/robot'
 
 describe('Robot', () => {
   let robot: Robot

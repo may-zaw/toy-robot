@@ -1,5 +1,5 @@
 import {beforeEach, afterEach, test, expect, describe, vi} from 'vitest'
-import { Simulator } from '../simulator'
+import { Simulator } from '../src/simulator/simulator'
 
 describe(`Integration Test`, () => {
   describe(`valid commands`, () => {

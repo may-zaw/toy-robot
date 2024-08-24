@@ -1,5 +1,5 @@
 import { beforeEach, describe, it, expect } from 'vitest';
-import { Table } from '../table';
+import { Table } from '../src/core/table';
 
 describe('Table', () => {
   let table: Table;

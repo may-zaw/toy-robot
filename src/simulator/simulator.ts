@@ -1,6 +1,6 @@
-import {  Robot } from './robot'
-import { Direction, ValidActions } from './types'
-import { Table } from './table'
+import {  Robot } from '../core/robot'
+import { Direction, ValidActions } from '../types'
+import { Table } from '../core/table'
 
 export class Simulator {
   private robot: Robot = new Robot()
