@@ -26,3 +26,15 @@ To run the test
 ```bash
   yarn test
 ```
+
+To build the app in docker
+
+```bash
+  yarn docker-build
+```
+
+To run the app in docker
+
+```bash
+  yarn docker-run
+```

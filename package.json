@@ -4,12 +4,15 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "tsc && node dist/src/index.js",
+    "build": "tsc",
+    "start": "build && node dist/src/index.js",
     "simulate": "ts-node fileSimulator.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
     "coverage": "vitest run --coverage",
-    "lint": "npx eslint src"
+    "lint": "npx eslint src",
+    "docker-build": "docker build --no-cache -t toyrobot-docker-app .",
+    "docker-run": "docker run -it toyrobot-docker-app"
   },
   "dependencies": {
     "typescript": "^5.5.4"
