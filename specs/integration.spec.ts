@@ -45,7 +45,13 @@ describe(`Integration Test`, () => {
       const output = simulator.robot.report()
       expect(output).toBe(`4,4,EAST`)
     })
+    test(`Robot should handle spaces in the command`, () => {
+      simulator.execute(`PLACE 0, 0, NORTH`)
+      simulator.execute(`MOVE`)
 
+      const output = simulator.robot.report()
+      expect(output).toBe(`0,1,NORTH`)
+    })
 
   })
 
@@ -61,6 +67,11 @@ describe(`Integration Test`, () => {
     test(`Robot should ignore the command if the first command is not PLACE`, () => {
       simulator.execute(`REPORT`)
       expect(Logger.error).toHaveBeenCalledWith(`The first command must be PLACE`)
+    })
+
+    test(`x and y valus are beyond valid poistion`, () => {
+      simulator.execute(`PLACE 10,10,EAST`)
+      expect(Logger.error).toHaveBeenCalledWith(`Invalid place position`)
     })
 
     test(`The direction is invalid`, () => {

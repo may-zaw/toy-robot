@@ -27,7 +27,11 @@ export class Simulator {
 
   private parseCommand(command: string): [string, string | undefined] {
     const commands = command.trim().toUpperCase().split(` `)
-    return [commands[0], commands[1]]
+    if (commands.length <= 2) 
+      return [commands[0], commands[1]]
+    else { // handle space in the command
+      return [commands[0], commands.slice(1).join(` `)]
+    }
   }
 
   private isValidAction(action: string): boolean {
@@ -48,6 +52,8 @@ export class Simulator {
     if (this.table.isValidPosition(x, y)) {
       this.robot.place(x, y, facing)
       this.hasPlaced = true
+    } else {
+      error(`Invalid place position`)
     }
   }
 
@@ -120,15 +126,15 @@ export class Simulator {
 
     const [xStr, yStr, facingStr] = splitParams
 
-    const x = parseInt(xStr, 10)
-    const y = parseInt(yStr, 10)
+    const x = parseInt(xStr.trim(), 10)
+    const y = parseInt(yStr.trim(), 10)
 
     if (!Number.isInteger(x) || !Number.isInteger(y)) {
       error(`x and y must be valid integers`)
       return null
     }
 
-    const facing = facingStr as Direction
+    const facing = facingStr.trim() as Direction
     if (!Object.values(Direction).includes(facing)) {
       error(`Invalid direction`)
       return null

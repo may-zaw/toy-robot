@@ -1,8 +1,10 @@
+const VALID_HEIGHT = 5
+const VALID_WIDTH = 5
 export class Table {
   private width: number
   private height: number
 
-  constructor(width: number = 5, height: number = 5) {
+  constructor(width: number = VALID_WIDTH, height: number = VALID_HEIGHT) {
     this.width = width
     this.height = height
   }
