@@ -25,7 +25,7 @@ LEFT<br />
 RIGHT<br />
 REPORT
 
-Test cases commands file is located in the project src/simulator/ folder.
+Test cases commands file is located in the project src/simulator/fixtures folder.
 
 ## Running the app with Docker
 

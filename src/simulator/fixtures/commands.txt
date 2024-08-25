@@ -61,7 +61,15 @@ REPORT
 RIGHT
 REPORT
 
-Test Case 10: Commands with Whitespace Variations
+Test Case 10: Commands with the invalid x, y values
+PLACE 1.5,1,NORTH
+MOVE   
+REPORT
+PLACE 1,y,NORTH
+MOVE   
+REPORT
+
+Test Case 11: Commands with Whitespace Variations
   PLACE 1,  1,  NORTH
 MOVE   
  REPORT  
