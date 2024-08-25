@@ -9,20 +9,24 @@ export class Simulator {
   private hasPlaced: boolean = false
 
   public execute(command: string): void {
-    const [action, params] = this.parseCommand(command)
+    try {
+      const [action, params] = this.parseCommand(command)
 
-    if (!this.isValidAction(action)) {
-      error(`Invalid action`)
-      return
-    }
+      if (!this.isValidAction(action)) {
+        error(`Invalid action`)
+        return
+      }
 
-    if (action === ValidActions.PLACE) {
-      this.handlePlaceCommand(params)
-    } else if (this.hasPlaced) {
-      this.handleMovementCommands(action)
-    } else {
-      this.handleNoPlaceCommand()
-    }
+      if (action === ValidActions.PLACE) {
+        this.handlePlaceCommand(params)
+      } else if (this.hasPlaced) {
+        this.handleMovementCommands(action)
+      } else {
+        this.handleNoPlaceCommand()
+      }
+    } catch (e) {
+      error(e.message)
+    } 
   }
 
   private parseCommand(command: string): [string, string | undefined] {
@@ -40,8 +44,7 @@ export class Simulator {
 
   private handlePlaceCommand(params: string | undefined): void {
     if (!params) {
-      error(`PLACE command must have 3 parameters, x, y and facing`)
-      return
+      throw new Error(`PLACE command must have 3 parameters, x, y and facing`)
     }
 
     const placeParamsArray = this.parsePlaceCommand(params)
@@ -53,7 +56,7 @@ export class Simulator {
       this.robot.place(x, y, facing)
       this.hasPlaced = true
     } else {
-      error(`Invalid place position`)
+      throw new Error(`Invalid place position`)
     }
   }
 
@@ -72,12 +75,12 @@ export class Simulator {
         this.report()
         break
       default:
-        error(`Invalid action`)
+        throw new Error(`Invalid action`)
     }
   }
 
   private handleNoPlaceCommand(): void {
-    error(`The first command must be PLACE`)
+    throw new Error(`The first command must be PLACE`)
   }
 
   private report(): void {
@@ -112,34 +115,26 @@ export class Simulator {
     return this.table.isValidPosition(newX, newY)
   }
 
-  private isInteger(value: string): boolean {
-    return /^\d+$/.test(value)
-  }
-
   private parsePlaceCommand(params: string): [number, number, Direction] | null {
     const splitParams = params.split(`,`)
 
     if (splitParams.length !== 3) {
-      error(`PLACE command must have 3 parameters: x, y, facing`)
-      return null
+      throw new Error(`PLACE command must have 3 parameters: x, y, facing`)
     }
 
     const [xStr, yStr, facingStr] = splitParams
+    const xNum = Number(xStr)
+    const yNum = Number(yStr)
 
-    const x = parseInt(xStr.trim(), 10)
-    const y = parseInt(yStr.trim(), 10)
-
-    if (!Number.isInteger(x) || !Number.isInteger(y)) {
-      error(`x and y must be valid integers`)
-      return null
+    if (!Number.isInteger(xNum) || !Number.isInteger(yNum)) {
+      throw new Error(`x and y must be valid integers`)
     }
 
     const facing = facingStr.trim() as Direction
     if (!Object.values(Direction).includes(facing)) {
-      error(`Invalid direction`)
-      return null
+      throw new Error(`Invalid direction`)
     }
 
-    return [x, y, facing]
+    return [xNum, yNum, facing]
   }
 }
