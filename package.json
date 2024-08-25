@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "build && node dist/src/index.js",
+    "start": "yarn build && node dist/src/index.js",
     "simulate": "ts-node fileSimulator.ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
