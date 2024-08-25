@@ -65,6 +65,11 @@ describe(`Simulator`, () => {
     expect(Logger.error).toHaveBeenCalledWith(`x and y must be valid integers`)
   })
 
+  it(`should handle invalid PLACE command with non-integer x,y values`, () => {
+    simulator.execute(`PLACE 1.5,2,NORTH`)
+    expect(Logger.error).toHaveBeenCalledWith(`x and y must be valid integers`)
+  })
+
   it(`should handle invalid direction in PLACE command`, () => {
     simulator.execute(`PLACE 0,0/INVALID`)
     expect(Logger.error).toHaveBeenCalledWith(`PLACE command must have 3 parameters: x, y, facing`)
